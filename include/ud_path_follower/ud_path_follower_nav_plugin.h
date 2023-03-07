@@ -1,10 +1,10 @@
-#ifndef HOVER_HOVER_PLUGIN_H
-#define HOVER_HOVER_PLUGIN_H
+#ifndef UD_PATH_FOLLOWER_PLUGIN_H
+#define UD_PATH_FOLLOWER_PLUGIN_H
 
-#include "path_follower.h"
+#include "ud_path_follower.h"
 #include <project11_navigation/interfaces/task_to_twist_workflow.h>
 
-namespace path_follower
+namespace ud_path_follower
 {
 
 class PathFollowerPlugin: public project11_navigation::TaskToTwistWorkflow, PathFollower

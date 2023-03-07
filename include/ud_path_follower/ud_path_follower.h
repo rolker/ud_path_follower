@@ -33,6 +33,7 @@
 #include "project11/utils.h"
 #include "project11/tf2_utils.h"
 #include "project11/pid.h"
+#include "nav_msgs/Odometry.h"
 
 namespace p11 = project11;
 
@@ -42,6 +43,12 @@ public:
   
   PathFollower();
   ~PathFollower();
+
+  //Baxevani
+  //void Prev_cmd_vel_Callback(const geometry_msgs::TwistStamped::ConstPtr& message);
+  void Prev_ypos_Callback(const nav_msgs::Odometry::ConstPtr& message);
+  void Save_Data_Callback(const nav_msgs::Odometry::ConstPtr& message);
+  //void Prev_sensor_data_Callback(const nav_msgs::Odometry::ConstPtr& message);
 
 protected:
   void initialize(ros::NodeHandle& nh, ros::NodeHandle& nh_private, const tf2_ros::Buffer *tf);
@@ -61,7 +68,7 @@ protected:
 private:
 
   // Dynamics mode
-  enum DynamicsMode { unicycle, holonomic };
+  enum DynamicsMode { unicycle, holonomic, UD_path_follower, UD_OCEANS23_follower };
   DynamicsMode m_dynamics_mode;
 
   /**
@@ -93,6 +100,19 @@ private:
   double m_goal_speed;
 
   p11::AngleRadians m_crab_angle;
+
+  double m_prev_lin_vel; //Baxevani
+  double m_prev_lin_vel_y; //Baxevani
+  double  m_prev_ang_vel; //Baxevani
+  double m_current_y; // Baxevani
+
+  double sensor_velx; //Baxevani
+  double sensor_vely; //Baxevani
+  double sensor_velw; //Baxevani
+  
+  //double prev_sensor_velx;
+  //double prev_sensor_vely;
+  //double prev_sensor_velw;
     
   double m_total_distance; // total distance of complete path in meters.
   double m_cumulative_distance; // distance of completed segments in meters.
@@ -103,6 +123,12 @@ private:
   
   // display
   ros::Publisher display_pub_;
+
+  ros::Publisher prev_sensor_vel;  //Baxevani
+  ros::Subscriber prev_cmd;  //Baxevani
+  ros::Subscriber prev_y; //Baxevani
+  ros::Subscriber simu_data; //Baxevani
+  ros::Subscriber prev_sensor_data; //Baxevani
 
 };
 

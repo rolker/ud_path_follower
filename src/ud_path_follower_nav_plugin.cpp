@@ -1,9 +1,9 @@
-#include <path_follower/path_follower_nav_plugin.h>
+#include <ud_path_follower/ud_path_follower_nav_plugin.h>
 #include <pluginlib/class_list_macros.h>
 
-PLUGINLIB_EXPORT_CLASS(path_follower::PathFollowerPlugin, project11_navigation::TaskToTwistWorkflow)
+PLUGINLIB_EXPORT_CLASS(ud_path_follower::PathFollowerPlugin, project11_navigation::TaskToTwistWorkflow)
 
-namespace path_follower
+namespace ud_path_follower
 {
 
 void PathFollowerPlugin::configure(std::string name, project11_navigation::Context::Ptr context)
