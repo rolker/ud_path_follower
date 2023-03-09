@@ -22,7 +22,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES path_follower_plugin
+  LIBRARIES path_follower_nav_plugin
   CATKIN_DEPENDS geometry_msgs roscpp project11 project11_navigation  geographic_visualization_msgs 
 )
 

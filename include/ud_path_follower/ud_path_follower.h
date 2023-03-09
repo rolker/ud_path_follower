@@ -46,8 +46,7 @@ public:
 
   //Baxevani
   //void Prev_cmd_vel_Callback(const geometry_msgs::TwistStamped::ConstPtr& message);
-  void Prev_ypos_Callback(const nav_msgs::Odometry::ConstPtr& message);
-  void Save_Data_Callback(const nav_msgs::Odometry::ConstPtr& message);
+  void Save_Data_Callback(const geometry_msgs::TwistStamped::ConstPtr& message);
   //void Prev_sensor_data_Callback(const nav_msgs::Odometry::ConstPtr& message);
 
 protected:

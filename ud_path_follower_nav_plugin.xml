@@ -1,5 +1,5 @@
 <library path="lib/libud_path_follower_nav_plugin">
-  <class name="ud_path_follower/UDPathFollower" type="ud_path_follower::PathFollowerPlugin" base_class_type="project11_navigation::TaskToTwistWorkflow">
+  <class name="ud_path_follower/PathFollower" type="ud_path_follower::PathFollowerPlugin" base_class_type="project11_navigation::TaskToTwistWorkflow">
     <description>
       A controller that minimizes linear and angular accelerations.
     </description>
