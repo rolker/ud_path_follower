@@ -41,9 +41,6 @@
 
 namespace p11 = project11;
 
-namespace ud_path_follower
-{
-
 double prev_sensor_velx=2.0;
 double prev_sensor_vely=2.0;
 double prev_sensor_velw = 0.0;
@@ -212,9 +209,9 @@ bool PathFollower::generateCommands(geometry_msgs::Twist &cmd_vel) {
             
             // Have we completed this segment?
             bool segment_complete;
-            // if (m_goal_speed == 0.0)
-            //     segment_complete = m_goal_path[m_current_segment_index + 1].header.stamp < now; // time based
-            // else
+            if (m_goal_speed == 0.0)
+                segment_complete = m_goal_path[m_current_segment_index + 1].header.stamp < now; // time based
+            else
                 segment_complete = progress >= curr_seg_dist; // distance based
 
             if (segment_complete) {
@@ -250,8 +247,11 @@ bool PathFollower::generateCommands(geometry_msgs::Twist &cmd_vel) {
         if (this->m_dynamics_mode == PathFollower::DynamicsMode::UD_OCEANS23_follower) {
             ros::NodeHandle nh;
 
-            simu_data = nh.subscribe("/echo/mavros/global_position/raw/gps_vel", 10, &PathFollower::Save_Data_Callback, this);
+            prev_y = nh.subscribe("/echo/", 10, &PathFollower::Prev_ypos_Callback, this);
+            simu_data = nh.subscribe("/ben/project11/odom", 10, &PathFollower::Save_Data_Callback, this);
 
+	    // prev_y = nh.subscribe("/ben/project11/odom", 10, &PathFollower::Prev_ypos_Callback, this);
+           // simu_data = nh.subscribe("/ben/project11/odom", 10, &PathFollower::Save_Data_Callback, this);
             p11::AngleRadians target_heading = curr_seg_azi;
 
             //p11::AngleRadians theta = -p11::AngleRadiansZeroCentered(target_heading - heading).value();
@@ -316,31 +316,6 @@ bool PathFollower::generateCommands(geometry_msgs::Twist &cmd_vel) {
 }
 
 
-void PathFollower::Save_Data_Callback(const geometry_msgs::TwistStamped::ConstPtr &message) //Baxevani
-{
-    this->sensor_velx = message->twist.linear.x;
-    this->sensor_vely = message->twist.linear.y;
-    this->sensor_velw = message->twist.angular.z;
-
-    //Baxevani
-    std::ofstream vel_x;
-    std::ofstream vel_y;
-    std::ofstream vel_w;
-
-
-    vel_x.open("velx_data.txt", std::ios_base::app);//std::ios_base::app
-    vel_x << sensor_velx << "  " << time(0) << "\n";
-    vel_y.open("vely_data.txt", std::ios_base::app);//std::ios_base::app
-    vel_y << sensor_vely << "  " << time(0) << "\n";
-    vel_w.open("velw_data.txt", std::ios_base::app);//std::ios_base::app
-    vel_w << sensor_velw << "  " << time(0) << "\n";
-
-}
-
-
-// For simulation uncomment this
-// ------------------------------
-/*
 void PathFollower::Save_Data_Callback(const nav_msgs::Odometry::ConstPtr &message) //Baxevani
 {
     this->sensor_velx = message->twist.twist.linear.x;
@@ -367,7 +342,7 @@ void PathFollower::Prev_ypos_Callback(const nav_msgs::Odometry::ConstPtr &messag
     this->m_current_y = message->pose.pose.position.y;
 
 }
-*/
+
 
 double PathFollower::progress() const {
     if (m_total_distance == 0)
@@ -463,4 +438,4 @@ void PathFollower::sendDisplay(bool dim) {
         this->display_pub_.publish(this->vis_display_);
 }
 
-} // namespace ud_path_follower
+
