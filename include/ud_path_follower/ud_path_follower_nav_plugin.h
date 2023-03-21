@@ -7,7 +7,7 @@
 namespace ud_path_follower
 {
 
-class PathFollowerPlugin: public project11_navigation::TaskToTwistWorkflow, PathFollower
+class PathFollowerPlugin: public project11_navigation::TaskToTwistWorkflow, ud_path_follower::PathFollower
 {
 public:
   void configure(std::string name, project11_navigation::Context::Ptr context) override;

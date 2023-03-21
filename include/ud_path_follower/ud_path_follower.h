@@ -19,8 +19,8 @@
  * 
  *
  */
-#ifndef PATH_FOLLOWER_NODE_H_
-#define PATH_FOLLOWER_NODE_H_
+#ifndef UD_PATH_FOLLOWER_H_
+#define UD_PATH_FOLLOWER_H_
 
 #include <vector>
 #include <cmath>
@@ -36,6 +36,9 @@
 #include "nav_msgs/Odometry.h"
 
 namespace p11 = project11;
+
+namespace ud_path_follower
+{
 
 class PathFollower
 {
@@ -131,5 +134,7 @@ private:
   ros::Subscriber prev_sensor_data; //Baxevani
 
 };
+
+} // namespace ud_path_follower
 
 #endif

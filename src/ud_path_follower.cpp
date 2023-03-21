@@ -37,6 +37,9 @@
 
 namespace p11 = project11;
 
+namespace ud_path_follower
+{
+
 double prev_sensor_velx=2.0;
 double prev_sensor_vely=2.0;
 double prev_sensor_velw = 0.0;
@@ -241,9 +244,9 @@ bool PathFollower::generateCommands(geometry_msgs::Twist &cmd_vel) {
 
             // Have we completed this segment?
             bool segment_complete;
-            if (m_goal_speed == 0.0)
-                segment_complete = m_goal_path[m_current_segment_index + 1].header.stamp < now; // time based
-            else
+            // if (m_goal_speed == 0.0)
+            //     segment_complete = m_goal_path[m_current_segment_index + 1].header.stamp < now; // time based
+            // else
                 segment_complete = progress >= curr_seg_dist; // distance based
 
             if (segment_complete) {
@@ -645,4 +648,4 @@ void PathFollower::sendDisplay(bool dim) {
         this->display_pub_.publish(this->vis_display_);
 }
 
-
+} // namespace ud_path_follower
