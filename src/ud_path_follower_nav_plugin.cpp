@@ -1,5 +1,6 @@
 #include <ud_path_follower/ud_path_follower_nav_plugin.h>
 #include <pluginlib/class_list_macros.h>
+#include <project11_navigation/robot_capabilities.h>
 
 PLUGINLIB_EXPORT_CLASS(ud_path_follower::PathFollowerPlugin, project11_navigation::TaskToTwistWorkflow)
 
@@ -11,12 +12,12 @@ void PathFollowerPlugin::configure(std::string name, project11_navigation::Conte
   context_ = context;
   ros::NodeHandle nh;
   ros::NodeHandle private_nh("~/" + name);
-  PathFollower::initialize(nh, private_nh, &context_->tfBuffer());
+  PathFollower::initialize(nh, private_nh, context_->tfBuffer());
   vis_display_.lines.clear();
   sendDisplay();
 }
 
-void PathFollowerPlugin::setGoal(const std::shared_ptr<project11_navigation::Task>& input)
+void PathFollowerPlugin::setGoal(const project11_navigation::TaskPtr& input)
 {
   if(current_task_ != input)
     task_update_time_ = ros::Time();
@@ -35,7 +36,10 @@ void PathFollowerPlugin::updateTask()
         double speed = 0.0;
         const auto& poses = current_task_->message().poses;
         if(poses.empty() || poses.front().header.stamp.isZero() || poses.back().header.stamp <= poses.front().header.stamp)
-          speed = context_->getRobotCapabilities().default_velocity.linear.x;
+        {
+          ros::NodeHandle nh("~");
+          speed = project11_navigation::RobotCapabilities(nh).default_velocity.linear.x;
+        }
 
         PathFollower::setGoal(current_task_->message().poses, speed);
       }

@@ -26,16 +26,16 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library(ud_path_follower_nav_plugin src/ud_path_follower.cpp src/ud_path_follower_nav_plugin.cpp)
-add_dependencies(ud_path_follower_nav_plugin ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(ud_path_follower_nav_plugin ${catkin_LIBRARIES})
+# add_library(ud_path_follower_nav_plugin src/ud_path_follower.cpp src/ud_path_follower_nav_plugin.cpp)
+# add_dependencies(ud_path_follower_nav_plugin ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# target_link_libraries(ud_path_follower_nav_plugin ${catkin_LIBRARIES})
 
 
-install(TARGETS  ud_path_follower_nav_plugin
-   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+# install(TARGETS  ud_path_follower_nav_plugin
+#    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 install(DIRECTORY include/${PROJECT_NAME}/
 DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}

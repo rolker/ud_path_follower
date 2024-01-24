@@ -53,7 +53,7 @@ public:
   //void Prev_sensor_data_Callback(const nav_msgs::Odometry::ConstPtr& message);
 
 protected:
-  void initialize(ros::NodeHandle& nh, ros::NodeHandle& nh_private, const tf2_ros::Buffer *tf);
+  void initialize(ros::NodeHandle& nh, ros::NodeHandle& nh_private, std::shared_ptr<tf2_ros::Buffer> tf);
   bool generateCommands(geometry_msgs::Twist &cmd_vel);
   void setGoal(const std::vector< geometry_msgs::PoseStamped > & 	plan, double speed=0.0);
   double crossTrackError() const;
@@ -66,7 +66,7 @@ protected:
   std::string m_base_frame;
   geographic_visualization_msgs::GeoVizItem vis_display_;
 
-  const tf2_ros::Buffer *m_tf_buffer = nullptr;
+  std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
 private:
 
   // Dynamics mode

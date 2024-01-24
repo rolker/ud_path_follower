@@ -71,8 +71,8 @@ PathFollower::~PathFollower() {
 }
 
 
-void PathFollower::initialize(ros::NodeHandle &nh, ros::NodeHandle &nh_private, const tf2_ros::Buffer *tf) {
-    m_tf_buffer = tf;
+void PathFollower::initialize(ros::NodeHandle &nh, ros::NodeHandle &nh_private, std::shared_ptr<tf2_ros::Buffer> tf) {
+    tf_buffer_ = tf;
     // Initiate node and get parameters.
     nh_private.param<std::string>("base_frame", this->m_base_frame, "base_link");
 
@@ -133,7 +133,7 @@ bool PathFollower::generateCommands(geometry_msgs::Twist &cmd_vel) {
     if (!m_goal_path.empty()) {
         geometry_msgs::TransformStamped base_to_map;
         try {
-            base_to_map = this->m_tf_buffer->lookupTransform(
+            base_to_map = this->tf_buffer_->lookupTransform(
                     m_goal_path[0].header.frame_id, this->m_base_frame, ros::Time(0));
         }
         catch (tf2::TransformException &ex) {
@@ -391,9 +391,9 @@ double PathFollower::distanceRemaining() const {
 
 void PathFollower::updateDisplay() {
     vis_display_.lines.clear();
-    if (!m_goal_path.empty() and m_tf_buffer) {
+    if (!m_goal_path.empty() and tf_buffer_) {
         try {
-            geometry_msgs::TransformStamped map_to_earth = m_tf_buffer->lookupTransform("earth",
+            geometry_msgs::TransformStamped map_to_earth = tf_buffer_->lookupTransform("earth",
                                                                                         m_goal_path.front().header.frame_id,
                                                                                         ros::Time(0));
 
